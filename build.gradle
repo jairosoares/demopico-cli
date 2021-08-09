@@ -1,0 +1,45 @@
+plugins {
+    id("groovy") 
+    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("io.micronaut.application") version "1.5.4"
+}
+
+version = "0.1"
+group = "com.example"
+
+repositories {
+    mavenCentral()
+}
+
+micronaut {
+    testRuntime("spock2")
+    processing {
+        incremental(true)
+        annotations("com.example.*")
+    }
+}
+
+dependencies {
+    annotationProcessor("info.picocli:picocli-codegen")
+    implementation("info.picocli:picocli")
+    implementation("io.micronaut:micronaut-runtime")
+    implementation("io.micronaut.picocli:micronaut-picocli")
+    implementation("javax.annotation:javax.annotation-api")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    implementation("io.micronaut:micronaut-validation")
+
+    testImplementation("io.micronaut:micronaut-http-client")
+
+}
+
+
+application {
+    mainClass.set("com.example.DemopicoCliCommand")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+    targetCompatibility = JavaVersion.toVersion("11")
+}
+
+
+
